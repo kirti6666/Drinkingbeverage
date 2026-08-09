@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+
+  /* Overwritten per-request from the theme saved in the admin panel. */
+  --navy: #1c3568;
+  --navy-deep: #132648;
+  --orange: #f47b20;
+  --orange-deep: #d9641a;
+  --ink: #0d1a2e;
+  --mist: #eef4fb;
+  --surface: #ffffff;
+  --radius: 18px;
+
+  /* Channel copies of the same colours, so Tailwind opacity modifiers work. */
+  --navy-rgb: 28 53 104;
+  --navy-deep-rgb: 19 38 72;
+  --orange-rgb: 244 123 32;
+  --orange-deep-rgb: 217 100 26;
+  --ink-rgb: 13 26 46;
+  --mist-rgb: 238 244 251;
+  --surface-rgb: 255 255 255;
+}
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--surface);
+    color: var(--ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--orange);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-shell px-5 sm:px-6 lg:px-8;
+  }
+
+  .section {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em];
+    color: var(--orange);
+  }
+
+  .h-section {
+    @apply text-[1.85rem] font-bold leading-[1.12] sm:text-4xl lg:text-[2.75rem];
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-transform duration-200 sm:text-[0.95rem];
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: #fff;
+    box-shadow: 0 10px 24px -12px var(--orange);
+  }
+
+  .btn-primary:hover {
+    background: var(--orange-deep);
+  }
+
+  .btn-ghost {
+    @apply border-2 bg-transparent;
+    border-color: rgba(255, 255, 255, 0.55);
+    color: #fff;
+  }
+
+  .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .btn-outline {
+    @apply border-2;
+    border-color: var(--navy);
+    color: var(--navy);
+  }
+
+  .btn-outline:hover {
+    background: var(--navy);
+    color: #fff;
+  }
+
+  /* WhatsApp's own green, so the button is recognisable at a glance. */
+  .btn-whatsapp {
+    background: #25d366;
+    color: #fff;
+    box-shadow: 0 10px 24px -12px #25d366;
+  }
+
+  .btn-whatsapp:hover {
+    background: #1eb355;
+  }
+
+  .card {
+    @apply relative overflow-hidden border bg-white;
+    border-color: rgb(var(--navy-rgb) / 0.1);
+    border-radius: var(--radius);
+  }
+
+  /* The signature mark: an orange meniscus that curves like the ripple in the
+     label artwork. Used once per section heading, never decoratively. */
+  .ripple::after {
+    content: '';
+    display: block;
+    width: 74px;
+    height: 8px;
+    margin-top: 14px;
+    background: radial-gradient(ellipse at top, transparent 58%, var(--orange) 60%);
+  }
+
+  .ripple-center::after {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Horizontal snap rails — used by testimonials and the mobile product row. */
+.rail {
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+.rail > * {
+  scroll-snap-align: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -6,6 +6,7 @@ import JsonLd from '../components/JsonLd';
 import { getConfig } from '../lib/store';
 import { toChannels } from '../lib/color';
 import { buildMetadata, organisationSchema, websiteSchema } from '../lib/seo';
+import Script from 'next/script';
 
 export function generateMetadata() {
   return buildMetadata(getConfig(), 'home', { path: '/' });
@@ -40,6 +41,21 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en-IN">
       <body>
+        
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-R1F5K5V4PS"
+          strategy="afterInteractive"
+        />
+        
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-R1F5K5V4PS');
+          `}
+        </Script>
+          
         <style dangerouslySetInnerHTML={{ __html: vars }} />
         {/* Describes the business to search engines on every page. */}
         <JsonLd data={[organisationSchema(config), websiteSchema(config)]} />
